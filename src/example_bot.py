@@ -2,6 +2,7 @@
 
 import discord
 import os 
+import comeback
 
 client = discord.Client()
 
@@ -24,8 +25,8 @@ async def on_message(message):
             for i in range(1,len(list)-1):
                 fullName+=list[i]+" "
             fullName+=list[len(list)-1]
-            await message.channel.send('This is still under construction. But I see that you want comebacks for ' + fullName + ".")
-
+            await message.channel.send(comeback.comeback_by_group(fullName))
+           
 
     if message.content.startswith('$help'):
         embed = discord.Embed(
