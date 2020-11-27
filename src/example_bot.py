@@ -25,8 +25,25 @@ async def on_message(message):
             for i in range(1,len(list)-1):
                 fullName+=list[i]+" "
             fullName+=list[len(list)-1]
-            await message.channel.send(comeback.comeback_by_group(fullName))
-           
+            artist_info = comeback.comeback_by_group(fullName)
+            if type(artist_info) is str:
+                await message.channel.send(comeback.comeback_by_group(fullName))
+            else:
+                embed = discord.Embed(
+                    colour=discord.Colour.green(),
+                    title=F"Comeback for {fullName}",
+                    #description="Command Listing"
+                )
+
+                embed.set_author(name="kpop-discord-bot", icon_url="https://cdn.discordapp.com/attachments/625510693499568138/771565443461808128/twice-fingerheart-prints.jpg")
+                #embed.set_image(url="https://cdn.discordapp.com/attachments/443208943213477889/601699371221909504/imagesfidosfhdis.jpg")
+                #embed.set_thumbnail(url="shows at the top right")
+                embed.add_field(name="Artist", value=artist_info['Artist'], inline=False)
+                embed.add_field(name="Title", value=artist_info['Title'], inline=False)
+                embed.add_field(name="Comeback Date", value=artist_info['Comeback Date'], inline=False)
+                embed.add_field(name="Type", value=artist_info['Type'], inline=False)
+                #embed.set_footer(text="This is a footer")
+                await message.channel.send(embed=embed)
 
     if message.content.startswith('$help'):
         embed = discord.Embed(
